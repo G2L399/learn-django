@@ -109,7 +109,6 @@ class Login(APIView):
 class LoginView(APIView):
     authentication_classes = []
     permission_classes = [AllowAny]
-
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -120,8 +119,7 @@ class LoginView(APIView):
             return Response({'error': 'Invalid username or password'}, status=status.HTTP_401_UNAUTHORIZED)
 
         # Update `last_login` automatically (done by `login`)
-        login(request, person)  # Optionally use this if you're using session-based auth
-
+        login(request, person)  # Optionally use this if you're using session-based authentication
         # Generate tokens
         refresh = RefreshToken.for_user(person)
         return Response({
@@ -135,27 +133,21 @@ class LoginView(APIView):
         
 class ProtectedView(APIView):
     permission_classes = [IsAuthenticated]
-
     def post(self, request):
         return Response({'message': 'This is a protected view!'})
     
 class PersonView(APIView):
-    authentication_classes = []
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
+    def post(self, request):
+        form = PersonForm(request.data)
+        if form.is_valid():
+            person = form.save()
+            serializer = PersonSerializer(person)
+            print(person)
+            return Response({'message': 'Person created successfully','data': serializer.data}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)
     def get(self, request):
         persons = Person.objects.all()
         serializer = PersonSerializer(persons, many=True)
         return Response(serializer.data)
-
-        
-class PersonUpload(APIView):
-        permission_classes = [IsAuthenticated]
-        def post(self, request):
-            form = PersonForm(request.data)
-            if form.is_valid():
-                person = form.save()
-                serializer = PersonSerializer(person)
-                print(person)
-                return Response({'message': 'Person created successfully','data': serializer.data}, status=status.HTTP_201_CREATED)
-            else:
-                return Response(form.errors, status=status.HTTP_400_BAD_REQUEST)

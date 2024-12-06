@@ -6,22 +6,10 @@ class BookForm(forms.ModelForm):
     class Meta:
         model = Book
         fields = ['title', 'author']
-        
-        
-
 class PersonForm(forms.ModelForm):    
     class Meta:
         model = Person
         fields = ['name', 'username','password']
-
-    def clean_password(self):
-        """
-        Only hash the password if it is provided.
-        """
-        password = self.cleaned_data.get("password")
-        if password:
-            return password  # Keep the password as-is if provided
-        return "indian"  # Return None if the password is not provided  
       
     def save(self, commit=True):
         print(self)
@@ -32,7 +20,6 @@ class PersonForm(forms.ModelForm):
         password = self.cleaned_data.get("password")
         if password:
             person.set_password(password)
-
         if commit:
             person.save()
         return person
