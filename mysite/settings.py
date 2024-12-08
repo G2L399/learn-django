@@ -56,7 +56,7 @@ AUTH_USER_MODEL = 'books.Person'
 
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=5),
     'ALGORITHM': 'HS256',
     'USER_ID_FIELD': 'id',  # Match your model's primary key field
     'USER_ID_CLAIM': 'user_id',
@@ -104,6 +104,15 @@ DATABASES = {
         "PASSWORD": "indian",
         "HOST": "localhost",
         "PORT": "5432",
+    }
+}
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/0',  # Redis URL and DB number
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
     }
 }
 
@@ -154,3 +163,10 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'bagassatwi@gmail.com'  # Replace with your email
+EMAIL_HOST_PASSWORD = 'kaox ofti hywm wttf'  # Replace with your email password
