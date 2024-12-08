@@ -11,7 +11,7 @@ class PersonForm(forms.ModelForm):
         model = Person
         fields = ['name', 'username','password']
       
-    def save(self, commit=True):
+    def save(self, commit=False):
         print(self)
         """
         Override the save method to hash the password before saving the user.
@@ -20,6 +20,4 @@ class PersonForm(forms.ModelForm):
         password = self.cleaned_data.get("password")
         if password:
             person.set_password(password)
-        if commit:
-            person.save()
         return person

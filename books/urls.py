@@ -15,4 +15,6 @@ urlpatterns = [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/protected/', ProtectedView.as_view(), name='protected'),
     path('Person/', views.PersonView.as_view(), name='Get_Person'),
+    path('otp/', views.OTPView.as_view(), name='login-otp'),
+    path('verify-otp/', views.VerifyOTPSignUp.as_view(), name='signup-otp'),
 ]
