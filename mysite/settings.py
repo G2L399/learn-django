@@ -170,3 +170,5 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'bagassatwi@gmail.com'  # Replace with your email
 EMAIL_HOST_PASSWORD = 'kaox ofti hywm wttf'  # Replace with your email password
+
+BRUH = "indian"

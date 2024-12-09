@@ -1,4 +1,5 @@
 myworld
 src
 **/__pycache__
-/mysite/settings.py
+mysite/settings.py
+indian
