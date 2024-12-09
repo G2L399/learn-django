@@ -1,3 +1,4 @@
 myworld
 src
 **/__pycache__
+/mysite/settings.py
